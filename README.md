@@ -123,3 +123,16 @@ For questions or suggestions, please open an issue on the GitHub repository or c
 
 - [Yongbin Choi](https://github.com/whybe-choi) - whybe.choi@gmail.com
 - [Yongwoo Song](https://github.com/facerain) - syw5141@khu.ac.kr
+
+## Citation 
+
+If you use KoViDoRe in your research, please cite as follows:
+```bibtex
+@misc{KoViDoRe2025,
+  author = {Yongbin Choi and Yongwoo Song},
+  title = {KoViDoRe: Korean Vision Document Retrieval Benchmark},
+  year = {2025},
+  url = {https://github.com/whybe-choi/kovidore-benchmark},
+  note = {A comprehensive benchmark for evaluating visual document retrieval models on Korean document images}
+}
+```
