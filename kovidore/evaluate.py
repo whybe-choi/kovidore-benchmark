@@ -10,15 +10,14 @@ from mteb import MTEB
 from mteb.abstasks.Image.AbsTaskAny2AnyRetrieval import AbsTaskAny2AnyRetrieval
 from mteb.abstasks.TaskMetadata import TaskMetadata
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
-
 
 
 def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
     """
     Load data from local directory structure in MTEB format.
-    
+
     Expected structure:
     data/{subset_name}/
     ├── queries.csv
@@ -29,18 +28,18 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
         └── ...
     """
     from datasets import Dataset
-    
+
     corpus = {}
     queries = {}
     relevant_docs = {}
-    
+
     data_dir = Path(f"data/{subset_name}")
-    
+
     if not data_dir.exists():
         logger.error(f"Data directory not found: {data_dir}")
         logger.error("Please ensure the data directory exists and contains the required CSV files")
         raise FileNotFoundError(f"Data directory not found: {data_dir}")
-    
+
     for split in splits:
         # Load queries
         queries_file = data_dir / "queries.csv"
@@ -49,13 +48,19 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
             try:
                 queries_df = pd.read_csv(queries_file)
                 logger.info(f"Loaded queries CSV with {len(queries_df)} rows")
-                for _, row in tqdm(queries_df.iterrows(), total=len(queries_df), desc=f"Processing queries for {split}"):
-                    query_data.append({
-                        "id": f"query-{split}-{row['query-id']}",
-                        "text": str(row["text"]),
-                        "image": None,
-                        "modality": "text"
-                    })
+                for _, row in tqdm(
+                    queries_df.iterrows(),
+                    total=len(queries_df),
+                    desc=f"Processing queries for {split}",
+                ):
+                    query_data.append(
+                        {
+                            "id": f"query-{split}-{row['query-id']}",
+                            "text": str(row["text"]),
+                            "image": None,
+                            "modality": "text",
+                        }
+                    )
                 logger.info(f"Created {len(query_data)} query entries for split {split}")
             except Exception as e:
                 logger.error(f"Failed to read queries file {queries_file}: {e}")
@@ -64,7 +69,7 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
         else:
             logger.warning(f"Queries file not found: {queries_file}")
         queries[split] = Dataset.from_list(query_data)
-        
+
         # Load corpus data
         corpus_file = data_dir / "corpus.csv"
         if corpus_file.exists():
@@ -74,7 +79,11 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
 
                 # Create generator with image paths (using datasets.Image feature type)
                 def corpus_generator():
-                    for _, row in tqdm(corpus_df.iterrows(), total=len(corpus_df), desc=f"Processing corpus for {split}"):
+                    for _, row in tqdm(
+                        corpus_df.iterrows(),
+                        total=len(corpus_df),
+                        desc=f"Processing corpus for {split}",
+                    ):
                         corpus_id = str(row["corpus-id"])
                         image_path_str = row.get("image_path", "")
 
@@ -82,7 +91,7 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
                             "id": f"corpus-{split}-{corpus_id}",
                             "text": None,
                             "image": image_path_str if image_path_str and Path(image_path_str).exists() else None,
-                            "modality": "image"
+                            "modality": "image",
                         }
 
                 logger.info(f"Created corpus generator for {len(corpus_df)} entries for split {split}")
@@ -93,14 +102,17 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
         else:
             logger.warning(f"Corpus file not found: {corpus_file}")
         from datasets import Features, Value, Image
-        features = Features({
-            "id": Value("string"),
-            "text": Value("string"),
-            "image": Image(),
-            "modality": Value("string")
-        })
+
+        features = Features(
+            {
+                "id": Value("string"),
+                "text": Value("string"),
+                "image": Image(),
+                "modality": Value("string"),
+            }
+        )
         corpus[split] = Dataset.from_generator(corpus_generator, features=features)
-        
+
         # Load qrels (relevance judgments)
         qrels_file = data_dir / "qrels.csv"
         relevant_docs[split] = {}
@@ -109,14 +121,19 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
                 qrels_df = pd.read_csv(qrels_file)
                 logger.info(f"Loaded qrels CSV with {len(qrels_df)} rows")
 
-                query_ids = qrels_df['query-id'].apply(lambda x: f"query-{split}-{x}")
-                corpus_ids = qrels_df['corpus-id'].apply(lambda x: f"corpus-{split}-{x}")
-                scores = qrels_df['score'].astype(int)
+                query_ids = qrels_df["query-id"].apply(lambda x: f"query-{split}-{x}")
+                corpus_ids = qrels_df["corpus-id"].apply(lambda x: f"corpus-{split}-{x}")
+                scores = qrels_df["score"].astype(int)
 
                 from collections import defaultdict
+
                 temp_docs = defaultdict(dict)
 
-                for qid, cid, score in tqdm(zip(query_ids, corpus_ids, scores), total=len(qrels_df), desc=f"Processing qrels for {split}"):
+                for qid, cid, score in tqdm(
+                    zip(query_ids, corpus_ids, scores),
+                    total=len(qrels_df),
+                    desc=f"Processing qrels for {split}",
+                ):
                     temp_docs[qid][cid] = score
 
                 relevant_docs[split] = dict(temp_docs)
@@ -127,7 +144,7 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
                 raise
         else:
             logger.warning(f"Qrels file not found: {qrels_file}")
-    
+
     logger.info(f"Loaded {subset_name} successfully")
     return corpus, queries, relevant_docs
 
@@ -154,7 +171,6 @@ class KoVidoreMIRRetrieval(AbsTaskAny2AnyRetrieval):
         dialect=[],
         modalities=["text", "image"],
         sample_creation="found",
-
         prompt={"query": "Find a screenshot that relevant to the user's question."},
         descriptive_stats={
             "n_samples": None,
@@ -174,19 +190,18 @@ class KoVidoreMIRRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="mir",
-            splits=self.metadata_dict["eval_splits"]
+            subset_name="mir", splits=self.metadata_dict["eval_splits"]
         )
-        
+
         # Debug: Print data structure
         logger.info(f"Corpus type: {type(self.corpus['test'])}")
         logger.info(f"Corpus length: {len(self.corpus['test'])}")
-        if len(self.corpus['test']) > 0:
+        if len(self.corpus["test"]) > 0:
             logger.info(f"Sample corpus entry: {self.corpus['test'][0]}")
-        
+
         logger.info(f"Queries type: {type(self.queries['test'])}")
         logger.info(f"Queries length: {len(self.queries['test'])}")
-        if len(self.queries['test']) > 0:
+        if len(self.queries["test"]) > 0:
             logger.info(f"Sample query: {self.queries['test'][0]}")
 
         self.data_loaded = True
@@ -214,7 +229,6 @@ class KoVidoreVQARetrieval(AbsTaskAny2AnyRetrieval):
         dialect=[],
         modalities=["text", "image"],
         sample_creation="found",
-
         prompt={"query": "Find a screenshot that relevant to the user's question."},
         descriptive_stats={
             "n_samples": None,
@@ -234,8 +248,7 @@ class KoVidoreVQARetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="vqa",
-            splits=self.metadata_dict["eval_splits"]
+            subset_name="vqa", splits=self.metadata_dict["eval_splits"]
         )
 
         self.data_loaded = True
@@ -263,7 +276,6 @@ class KoVidoreSlideRetrieval(AbsTaskAny2AnyRetrieval):
         dialect=[],
         modalities=["text", "image"],
         sample_creation="found",
-
         prompt={"query": "Find a screenshot that relevant to the user's question."},
         descriptive_stats={
             "n_samples": None,
@@ -283,8 +295,7 @@ class KoVidoreSlideRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="slide",
-            splits=self.metadata_dict["eval_splits"]
+            subset_name="slide", splits=self.metadata_dict["eval_splits"]
         )
 
         self.data_loaded = True
@@ -312,7 +323,6 @@ class KoVidoreOfficeRetrieval(AbsTaskAny2AnyRetrieval):
         dialect=[],
         modalities=["text", "image"],
         sample_creation="found",
-
         prompt={"query": "Find a screenshot that relevant to the user's question."},
         descriptive_stats={
             "n_samples": None,
@@ -332,8 +342,7 @@ class KoVidoreOfficeRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="office",
-            splits=self.metadata_dict["eval_splits"]
+            subset_name="office", splits=self.metadata_dict["eval_splits"]
         )
 
         self.data_loaded = True
@@ -361,7 +370,6 @@ class KoVidoreFinOCRRetrieval(AbsTaskAny2AnyRetrieval):
         dialect=[],
         modalities=["text", "image"],
         sample_creation="found",
-
         prompt={"query": "Find a screenshot that relevant to the user's question."},
         descriptive_stats={
             "n_samples": None,
@@ -381,8 +389,7 @@ class KoVidoreFinOCRRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="finocr",
-            splits=self.metadata_dict["eval_splits"]
+            subset_name="finocr", splits=self.metadata_dict["eval_splits"]
         )
 
         self.data_loaded = True
@@ -410,7 +417,6 @@ class KoVidoreTestRetrieval(AbsTaskAny2AnyRetrieval):
         dialect=[],
         modalities=["text", "image"],
         sample_creation="found",
-
         prompt={"query": "Find a screenshot that relevant to the user's question."},
         descriptive_stats={
             "n_samples": None,
@@ -430,8 +436,7 @@ class KoVidoreTestRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="test",
-            splits=self.metadata_dict["eval_splits"]
+            subset_name="test", splits=self.metadata_dict["eval_splits"]
         )
 
         self.data_loaded = True
@@ -472,7 +477,7 @@ def check_existing_results(model_name: str, tasks: List[str]) -> Tuple[List[str]
         if results_dir.exists():
             for result_file in results_dir.rglob(f"{task_class_name}.json"):
                 try:
-                    with open(result_file, 'r') as f:
+                    with open(result_file, "r") as f:
                         result_data = json.load(f)
 
                     # Check if the result file has valid scores
@@ -495,7 +500,7 @@ def run_benchmark(
     model_name: str = "average_word_embeddings_komninos",
     tasks: Optional[List[str]] = None,
     batch_size: int = 16,
-    skip_existing: bool = True
+    skip_existing: bool = True,
 ):
     """
     Run KoVidore benchmark evaluation.
@@ -537,7 +542,7 @@ def run_benchmark(
             logger.error(f"Available tasks: {list(AVAILABLE_TASKS.keys())}")
             logger.error("Please check your task names and try again")
             return None
-        
+
         # Use mteb.get_model() for standardized model loading
         try:
             logger.info(f"Loading model: {model_name}")
@@ -549,20 +554,24 @@ def run_benchmark(
             logger.debug(f"Model loading error traceback:\n{traceback.format_exc()}")
             raise
         selected_tasks = [AVAILABLE_TASKS[task]() for task in tasks]
-        
+
         logger.info(f"Starting evaluation with model: {model_name}")
         logger.info(f"Running tasks: {tasks}")
-        
+
         try:
             evaluation = mteb.MTEB(tasks=selected_tasks)
             logger.info(f"Starting evaluation with batch_size={batch_size}")
-            results = evaluation.run(model, output_folder=f"results/{model_name}", encode_kwargs = {'batch_size': batch_size})
+            results = evaluation.run(
+                model,
+                output_folder=f"results/{model_name}",
+                encode_kwargs={"batch_size": batch_size},
+            )
         except Exception as e:
             logger.error(f"Evaluation execution failed: {e}")
             logger.error(f"Model: {model_name}, Tasks: {tasks}, Batch size: {batch_size}")
             logger.debug(f"Evaluation error traceback:\n{traceback.format_exc()}")
             raise
-        
+
         logger.info("Evaluation completed successfully")
         return evaluation
     except ImportError as e:
