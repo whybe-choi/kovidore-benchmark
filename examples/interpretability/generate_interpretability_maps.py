@@ -62,7 +62,6 @@ def map_tokens_to_words(query_text, display_tokens):
 
         while token_idx < len(display_tokens):
             current_token = display_tokens[token_idx]
-            current_norm = current_token.replace(" ", "")
 
             word_token_indices.append(token_idx)
             accumulated += current_token
