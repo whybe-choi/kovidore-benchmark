@@ -43,6 +43,31 @@ The following table shows performance across all KoVidore tasks (ndcg@5 scores a
 | **openai/clip-vit-base-patch16** | 151 | 0.3 | 0.6 | 0.0 | 5.9 | 3.3 | 2.5 | 8.3 |
 | **ibm-granite/granite-vision-3.3-2b-embedding** | 2980 | 0.0 | 0.4 | 0.6 | 0.3 | 0.0 | 0.26 | 58.1 |
 
+## Interpretability
+
+We provide interpretability maps to help understand how different models attend to document image patches when processing queries. Each row in the tables represents interpretability maps for different query words.
+
+- Query: **인천 광역시의 CT 설치 비율은 몇 프로니?**
+
+| vidore/colpali-v1.3 | vidore/colqwen2.5-v0.2 | jinaai/jina-embeddings-v4 |
+|---------------------|------------------------|---------------------------|
+| <img src="assets/interpretability/colpali-v1.3/vqa/73209/03_설치.png" width="500" alt="interpretability"> | <img src="assets/interpretability/colqwen2.5-v0.2/vqa/73209/03_설치.png" width="500" alt="interpretability"> | <img src="assets/interpretability/jina-embeddings-v4/vqa/73209/03_설치.png" width="500" alt="interpretability"> |
+| <img src="assets/interpretability/colpali-v1.3/vqa/73209/04_비율은.png" width="500" alt="interpretability"> | <img src="assets/interpretability/colqwen2.5-v0.2/vqa/73209/04_비율은.png" width="500" alt="interpretability"> | <img src="assets/interpretability/jina-embeddings-v4/vqa/73209/04_비율은.png" width="500" alt="interpretability"> |
+
+- Query: **지방자치단체가 보건복지부에 제출하는 문서는 무엇인가요?**
+
+| vidore/colpali-v1.3 | vidore/colqwen2.5-v0.2 | jinaai/jina-embeddings-v4 |
+|---------------------|------------------------|---------------------------|
+| <img src="assets/interpretability/colpali-v1.3/vqa/69302/01_지방자치단체가.png" width="500" alt="interpretability"> | <img src="assets/interpretability/colqwen2.5-v0.2/vqa/69302/01_지방자치단체가.png" width="500" alt="interpretability"> | <img src="assets/interpretability/jina-embeddings-v4/vqa/69302/01_지방자치단체가.png" width="500" alt="interpretability"> |
+| <img src="assets/interpretability/colpali-v1.3/vqa/69302/02_보건복지부에.png" width="500" alt="interpretability"> | <img src="assets/interpretability/colqwen2.5-v0.2/vqa/69302/02_보건복지부에.png" width="500" alt="interpretability"> | <img src="assets/interpretability/jina-embeddings-v4/vqa/69302/02_보건복지부에.png" width="500" alt="interpretability"> |
+
+- Query: **나무가 주거 공간에서 제공하는 역할은 무엇인가?**
+
+| vidore/colpali-v1.3 | vidore/colqwen2.5-v0.2 | jinaai/jina-embeddings-v4 |
+|---------------------|------------------------|---------------------------|
+| <img src="assets/interpretability/colpali-v1.3/slide/1/01_나무가.png" width="500" alt="interpretability"> | <img src="assets/interpretability/colqwen2.5-v0.2/slide/1/01_나무가.png" width="500" alt="interpretability"> | <img src="assets/interpretability/jina-embeddings-v4/slide/1/01_나무가.png" width="500" alt="interpretability"> |
+| <img src="assets/interpretability/colpali-v1.3/slide/1/02_주거.png" width="500" alt="interpretability"> | <img src="assets/interpretability/colqwen2.5-v0.2/slide/1/02_주거.png" width="500" alt="interpretability"> | <img src="assets/interpretability/jina-embeddings-v4/slide/1/02_주거.png" width="500" alt="interpretability"> |
+
 ## Installation
 
 ```bash
