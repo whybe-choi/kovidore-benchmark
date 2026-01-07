@@ -1,15 +1,20 @@
-# KoVidore Benchmark
+# KoViDoRe Benchmark
 
-Korean Vision Document Retrieval (KoVidore) benchmark for evaluating text-to-image retrieval models on Korean visual documents.
+Korean Vision Document Retrieval (KoViDoRe) benchmark for evaluating text-to-image retrieval models on Korean visual documents.
 
 ## Overview
 <img src="assets/cover.png" alt="cover">
 
-KoVidore is a comprehensive benchmark for evaluating Korean visual document retrieval capabilities. Built upon the foundation of [ViDoRe](https://github.com/illuin-tech/vidore-benchmark), it assesses how well models can retrieve relevant Korean visual documents—including screenshots, presentation slides, and office documents—when given Korean text queries.
+**KoViDoRe** is a comprehensive benchmark for evaluating Korean visual document retrieval capabilities. Built upon the foundation of [ViDoRe](https://huggingface.co/vidore), it assesses how well models can retrieve relevant Korean visual documents—including screenshots, presentation slides, and office documents—when given Korean text queries.
 
-The benchmark encompasses 5 distinct tasks, each targeting different types of visual documents commonly found in Korean business and academic environments. This diverse task structure allows for thorough evaluation of multimodal retrieval performance across various document formats and content types.
+The **KoViDoRe v1** encompasses 5 distinct tasks, each targeting different types of visual documents commonly found in Korean business and academic environments. This diverse task structure allows for thorough evaluation of multimodal retrieval performance across various document formats and content types.
+
+The **KoViDoRe v2** addresses a key limitation of KoViDoRe v1—single-page matching—by generating queries that require synthesizing information across multiple pages. This benchmark consists of 4 distinct tasks targeting practical enterprise domains: cybersecurity, economic reports, energy documents, and HR materials.
+
 
 ## Tasks & Examples
+
+### KoViDoRe v1
 
 | Task | Description | Documents | Queries | Example Query | Sample Image |
 |------|-------------|-----------|---------|---------------|--------------|
@@ -19,9 +24,19 @@ The benchmark encompasses 5 distinct tasks, each targeting different types of vi
 | **Office** | Office Documents | 1,993 | 222 | 정치·사회 이슈를 주제로 하는 유튜브 채널을 통해 정보를 얻는 비율은 얼마인가요? | <img src="assets/examples/office_sample.jpg" width="200" alt="Office"> |
 | **FinOCR** | Financial OCR Documents | 2,000 | 198 | 반려동물보험에 가입한 보험계약자 공형진의 증권번호는 무엇인가요? | <img src="assets/examples/finocr_sample.png" width="200" alt="FinOCR"> |
 
+### KoViDoRe v2
+
+| Subset | Description | Documents | Queries | Link |
+|--------|-------------|-----------|---------|------|
+| **HR** | Workforce outlook and employment policy | 2,109 | 221 | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-hr-beir) |
+| **Energy** | Energy policy and power market trends | 1,911 | 190 | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-energy-beir) |
+| **Economic** | Quarterly economic trend reports | 1,477 | 163 | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-economic-beir) |
+| **Cybersecurity** | Cyber threat analysis and security guides | 1,150 | 149 | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-cybersecurity-beir) |
+
 ## Performance Leaderboard
 
-The following table shows performance across all KoVidore tasks (ndcg@5 scores as percentages):
+### KoViDoRe v1
+The following table shows performance across all KoViDoRe v1 tasks (ndcg@5 scores as percentages):
 
 | Model | Model Size | FinOCR | MIR | Office | Slide | VQA | Average | ViDoRe V2 (Eng) |
 |-------|------------|--------|-----|--------|-------|-----|---------|------------------|
@@ -42,6 +57,29 @@ The following table shows performance across all KoVidore tasks (ndcg@5 scores a
 | **laion/CLIP-ViT-bigG-14-laion2B-39B-b160k** | 2540 | 0.5 | 1.9 | 3.7 | 12.5 | 5.6 | 4.8 | 17.6 |
 | **openai/clip-vit-base-patch16** | 151 | 0.3 | 0.6 | 0.0 | 5.9 | 3.3 | 2.5 | 8.3 |
 | **ibm-granite/granite-vision-3.3-2b-embedding** | 2980 | 0.0 | 0.4 | 0.6 | 0.3 | 0.0 | 0.26 | 58.1 |
+
+### KoViDoRe v2
+The following table shows performance across all KoViDoRe v2 tasks (ndcg@10 scores as percentages):
+
+| Model | Model Size | Cybersecurity | Economic | Energy | HR | Average | KoViDoRe V1 (Kor) |
+|-------|------------|---------------|----------|--------|-----|---------|------------------|
+| **nomic-ai/colnomic-embed-multimodal-3b** | 3000 | 73.7 | 17.8 | 61.0 | 37.0 | 47.4 | 80.4 |
+| **nomic-ai/colnomic-embed-multimodal-7b** | 7000 | 72.3 | 19.9 | 56.7 | 35.8 | 46.2 | 82.1 |
+| **vidore/colqwen2.5-v0.2** | 3000 | 60.8 | 12.6 | 48.1 | 22.9 | 36.1 | 72.8 |
+| **vidore/colqwen2-v1.0** | 2210 | 59.9 | 10.4 | 37.7 | 23.8 | 33.0 | 68.4 |
+| **jinaai/jina-embeddings-v4** | 3800 | 77.3 | 25.5 | 61.7 | 50.4 | 53.7 | 85.4 |
+| **vidore/colpali-v1.2** | 2920 | 40.9 | 2.0 | 18.2 | 5.9 | 16.8 | 36.1 |
+| **vidore/colpali-v1.3** | 2920 | 37.8 | 1.7 | 17.8 | 7.0 | 16.1 | 35.9 |
+| **vidore/colpali-v1.1** | 2920 | 35.6 | 2.7 | 17.7 | 6.5 | 15.6 | 32.2 |
+| **nvidia/llama-nemoretriever-colembed-3b-v1** | 3000 | TBA | TBA | TBA | TBA | TBA | TBA |
+| **nvidia/llama-nemoretriever-colembed-1b-v1** | 2418 | 52.1 | TBA | TBA | TBA | TBA | 46.3 |
+| **vidore/colSmol-500M** | 500 | 27.0 | 1.1 | 6.3 | 1.2 | 8.9 | 17.8 |
+| **vidore/colSmol-256M** | 256 | 23.1 | 1.1 | 5.7 | 1.3 | 7.8 | 16.1 |
+| **google/siglip-so400m-patch14-384** | 878 | 15.3 | 1.3 | 3.3 | 1.1 | 5.3 | 8.6 |
+| **TIGER-Lab/VLM2Vec-Full** | 4150 | 9.8 | 1.3 | 2.8 | 1.2 | 3.8 | 6.4 |
+| **laion/CLIP-ViT-bigG-14-laion2B-39B-b160k** | 2540 | 13.7 | 0.3 | 2.4 | 0.4 | 4.2 | 4.8 |
+| **openai/clip-vit-base-patch16** | 151 | 4.1 | 0.0 | 0.7 | 0.6 | 1.3 | 2.5 |
+| **ibm-granite/granite-vision-3.3-2b-embedding** | 2980 | 0.0 | 0.5 | 0.3 | 0.4 | 0.3 | 0.3 |
 
 ## Interpretability
 
@@ -111,6 +149,9 @@ evaluation = run_benchmark("your-model-name", batch_size=32)
 
 ## Datasets
 
+> [!Note]
+> Unlike KoViDoRe v1, KoViDoRe v2 has no license restrictions and is freely available on Hugging Face. You can access the full dataset collection [here](https://huggingface.co/collections/whybe-choi/kovidore-benchmark-beir-v2).
+
 We provide pre-processed queries and query-corpus mappings for each task. However, due to licensing restrictions, you'll need to download the image datasets manually from AI Hub (see Acknowledgements section for dataset links).
 
 **Setup Instructions:**
@@ -129,13 +170,13 @@ The benchmark will automatically locate and use the images from these directorie
 
 ## Results
 
-Results are automatically saved in the `results/` directory after evaluation completion. The benchmark uses NDCG@5 as the main evaluation metric for all tasks.
+Results are automatically saved in the `results/` directory after evaluation completion. The KoViDoRe v1 uses NDCG@5 and the KoViDoRe v2 uses NDCG@10 as the main evaluation metric for all tasks.
 
 ## Acknowledgements
 
-This benchmark is inspired by the [ViDoRe](https://github.com/illuin-tech/vidore-benchmark) benchmark. We thank the original authors for their foundational work that helped shape our approach to Korean visual document retrieval.
+This benchmark is inspired by the [ViDoRe](https://huggingface.co/vidore) benchmark. We thank the original authors for their foundational work that helped shape our approach to Korean visual document retrieval.
 
-We also acknowledge the following Korean datasets from AI Hub that were used to construct each task in KoVidore:
+We also acknowledge the following Korean datasets from AI Hub that were used to construct each task in KoViDoRe v1:
 
 - **[멀티모달 정보검색 데이터](https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&dataSetSn=71813)** - Used for KoVidoreMIRRetrieval task
 - **[시각화 자료 질의응답 데이터](https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&dataSetSn=71812)** - Used for KoVidoreVQARetrieval task  
@@ -159,5 +200,13 @@ If you use KoViDoRe in your research, please cite as follows:
   year = {2025},
   url = {https://github.com/whybe-choi/kovidore-benchmark},
   note = {A comprehensive benchmark for evaluating visual document retrieval models on Korean document images}
+}
+
+@misc{choi2026kovidorev2,
+  author = {Yongbin Choi},
+  title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
+  year = {2026},
+  url = {https://github.com/whybe-choi/kovidore-data-generator},
+  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
 }
 ```

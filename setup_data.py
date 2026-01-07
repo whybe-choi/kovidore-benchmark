@@ -35,6 +35,22 @@ DATASETS = {
         "path": "whybe-choi/kovidore-finocr-v1.0-beir",
         "revision": "7bb3aa802bba49f167696ffd9fbb669ad2133092",
     },
+    "cybersecurity": {
+        "path": "whybe-choi/kovidore-v2-cybersecurity-beir",
+        "revision": "006dcb0e8f63c9736687cb36e725769c903054b0",
+    },
+    "energy": {
+        "path": "whybe-choi/kovidore-v2-energy-beir",
+        "revision": "17fea125be86500c0d7891967ca0e4ada14fbe0d",
+    },
+    "economic": {
+        "path": "whybe-choi/kovidore-v2-economic-beir",
+        "revision": "8400656ad1e90e7662d7cda44628eaa2d29ea8d8",
+    },
+    "hr": {
+        "path": "whybe-choi/kovidore-v2-hr-beir",
+        "revision": "0641db2d66968538823af3a847257ee6b813c57e",
+    },
 }
 
 
@@ -65,7 +81,7 @@ def setup_dataset(subset_name: str, config: dict):
     for item in queries_dataset:
         queries_data.append(
             {
-                "query-id": item.get("query-id", item.get("_id")),
+                "query-id": item.get("query-id", item.get("query_id", item.get("_id"))),
                 "text": item.get("text", item.get("query")),
             }
         )
@@ -73,9 +89,9 @@ def setup_dataset(subset_name: str, config: dict):
     # Prepare qrels data
     qrels_data = []
     for item in qrels_dataset:
-        query_id = item["query-id"]
-        corpus_id = item["corpus-id"]
-        score = item["score"]
+        query_id = item.get("query-id", item.get("query_id", item.get("_id")))
+        corpus_id = item.get("corpus-id", item.get("corpus_id", item.get("_id")))
+        score = item.get("score")
 
         qrels_data.append({"query-id": query_id, "corpus-id": corpus_id, "score": score})
 
@@ -90,7 +106,7 @@ def setup_dataset(subset_name: str, config: dict):
     # Prepare corpus data and save images
     corpus_data = []
     for item in corpus_dataset:
-        corpus_id = item.get("corpus-id", item.get("_id"))
+        corpus_id = item.get("corpus-id", item.get("corpus_id", item.get("_id")))
         image_path = images_dir / f"{corpus_id}{image_ext}"
         image_path_str = ""
 
