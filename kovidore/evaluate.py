@@ -384,16 +384,6 @@ class KoVidoreFinOCRRetrieval(AbsTaskAny2AnyRetrieval):
         },
     )
 
-    def load_data(self, **kwargs):
-        if self.data_loaded:
-            return
-
-        self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="finocr", splits=self.metadata_dict["eval_splits"]
-        )
-
-        self.data_loaded = True
-
 
 class KoVidoreTestRetrieval(AbsTaskAny2AnyRetrieval):
     metadata = TaskMetadata(
@@ -442,6 +432,231 @@ class KoVidoreTestRetrieval(AbsTaskAny2AnyRetrieval):
         self.data_loaded = True
 
 
+class KoVidore2CybersecurityRetrieval(AbsTaskAny2AnyRetrieval):
+    metadata = TaskMetadata(
+        name="KoVidore2CybersecurityRetrieval",
+        description="Retrieve associated pages according to questions. This dataset, Cybersecurity, is a corpus of technical reports on cyber threat trends and security incident responses in Korea, intended for complex-document understanding tasks.",
+        reference="https://huggingface.co/datasets/whybe-choi/kovidore-v2-cybersecurity-beir",
+        dataset={
+            "path": "data/cybersecurity",
+            "revision": "local",
+        },
+        type="DocumentUnderstanding",
+        category="t2i",
+        eval_splits=["test"],
+        eval_langs=["kor-Hang"],
+        main_score="ndcg_at_10",
+        date=("2025-12-21", "2026-01-06"),
+        domains=["Social"],
+        task_subtypes=["Image Text Retrieval"],
+        license="cc-by-4.0",
+        annotations_creators="derived",
+        dialect=[],
+        modalities=["text", "image"],
+        sample_creation="created",
+        bibtext_citation="""
+@misc{choi2026kovidorev2,
+  author = {Yongbin Choi},
+  title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
+  year = {2026},
+  url = {https://github.com/whybe-choi/kovidore-data-generator},
+  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
+}
+""",
+        prompt={"query": "Find a screenshot that is relevant to the user's question."},
+    )
+
+    def load_data(self, **kwargs):
+        if self.data_loaded:
+            return
+
+        self.corpus, self.queries, self.relevant_docs = _load_local_data(
+            subset_name="cybersecurity", splits=self.metadata_dict["eval_splits"]
+        )
+
+        self.data_loaded = True
+
+
+class KoVidore2CybersecurityRetrieval(AbsTaskAny2AnyRetrieval):
+    metadata = TaskMetadata(
+        name="KoVidore2CybersecurityRetrieval",
+        description="Retrieve associated pages according to questions. This dataset, Cybersecurity, is a corpus of technical reports on cyber threat trends and security incident responses in Korea, intended for complex-document understanding tasks.",
+        reference="https://huggingface.co/datasets/whybe-choi/kovidore-v2-cybersecurity-beir",
+        dataset={
+            "path": "data/cybersecurity",
+            "revision": "local",
+        },
+        type="DocumentUnderstanding",
+        category="t2i",
+        eval_splits=["test"],
+        eval_langs=["kor-Hang"],
+        main_score="ndcg_at_10",
+        date=("2025-12-21", "2026-01-06"),
+        domains=["Social"],
+        task_subtypes=["Image Text Retrieval"],
+        license="cc-by-4.0",
+        annotations_creators="derived",
+        dialect=[],
+        modalities=["text", "image"],
+        sample_creation="created",
+        bibtext_citation="""
+@misc{choi2026kovidorev2,
+  author = {Yongbin Choi},
+  title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
+  year = {2026},
+  url = {https://github.com/whybe-choi/kovidore-data-generator},
+  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
+}
+""",
+        prompt={"query": "Find a screenshot that is relevant to the user's question."},
+    )
+
+    def load_data(self, **kwargs):
+        if self.data_loaded:
+            return
+
+        self.corpus, self.queries, self.relevant_docs = _load_local_data(
+            subset_name="cybersecurity", splits=self.metadata_dict["eval_splits"]
+        )
+
+        self.data_loaded = True
+
+
+class KoVidore2EnergyRetrieval(AbsTaskAny2AnyRetrieval):
+    metadata = TaskMetadata(
+        name="KoVidore2EnergyRetrieval",
+        description="Retrieve associated pages according to questions. This dataset, Energy, is a corpus of reports on energy market trends, policy planning, and industry statistics, intended for complex-document understanding tasks.",
+        reference="https://huggingface.co/datasets/whybe-choi/kovidore-v2-energy-beir",
+        dataset={
+            "path": "data/energy",
+            "revision": "local",
+        },
+        type="DocumentUnderstanding",
+        category="t2i",
+        eval_splits=["test"],
+        eval_langs=["kor-Hang"],
+        main_score="ndcg_at_10",
+        date=("2025-12-21", "2026-01-06"),
+        domains=["Social"],
+        task_subtypes=["Image Text Retrieval"],
+        license="cc-by-4.0",
+        annotations_creators="derived",
+        dialect=[],
+        modalities=["text", "image"],
+        sample_creation="created",
+        bibtext_citation="""
+@misc{choi2026kovidorev2,
+  author = {Yongbin Choi},
+  title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
+  year = {2026},
+  url = {https://github.com/whybe-choi/kovidore-data-generator},
+  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
+}
+""",
+        prompt={"query": "Find a screenshot that is relevant to the user's question."},
+    )
+
+    def load_data(self, **kwargs):
+        if self.data_loaded:
+            return
+
+        self.corpus, self.queries, self.relevant_docs = _load_local_data(
+            subset_name="energy", splits=self.metadata_dict["eval_splits"]
+        )
+
+        self.data_loaded = True
+
+
+class KoVidore2EconomicRetrieval(AbsTaskAny2AnyRetrieval):
+    metadata = TaskMetadata(
+        name="KoVidore2EconomicRetrieval",
+        description="Retrieve associated pages according to questions. This dataset, Economic trends, is a corpus of periodic reports on major economic indicators in Korea, intended for complex-document understanding tasks.",
+        reference="https://huggingface.co/datasets/whybe-choi/kovidore-v2-economic-beir",
+        dataset={
+            "path": "data/economic",
+            "revision": "local",
+        },
+        type="DocumentUnderstanding",
+        category="t2i",
+        eval_splits=["test"],
+        eval_langs=["kor-Hang"],
+        main_score="ndcg_at_10",
+        date=("2025-12-21", "2026-01-06"),
+        domains=["Social"],
+        task_subtypes=["Image Text Retrieval"],
+        license="cc-by-4.0",
+        annotations_creators="derived",
+        dialect=[],
+        modalities=["text", "image"],
+        sample_creation="created",
+        bibtext_citation="""
+@misc{choi2026kovidorev2,
+  author = {Yongbin Choi},
+  title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
+  year = {2026},
+  url = {https://github.com/whybe-choi/kovidore-data-generator},
+  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
+}
+""",
+        prompt={"query": "Find a screenshot that is relevant to the user's question."},
+    )
+
+    def load_data(self, **kwargs):
+        if self.data_loaded:
+            return
+
+        self.corpus, self.queries, self.relevant_docs = _load_local_data(
+            subset_name="economic", splits=self.metadata_dict["eval_splits"]
+        )
+
+        self.data_loaded = True
+
+
+class KoVidore2HrRetrieval(AbsTaskAny2AnyRetrieval):
+    metadata = TaskMetadata(
+        name="KoVidore2HrRetrieval",
+        description="Retrieve associated pages according to questions. This dataset, HR, is a corpus of reports on workforce outlook and employment policy in korea, intended for complex-document understanding tasks.",
+        reference="https://huggingface.co/datasets/whybe-choi/kovidore-v2-hr-beir",
+        dataset={
+            "path": "data/hr",
+            "revision": "local",
+        },
+        type="DocumentUnderstanding",
+        category="t2i",
+        eval_splits=["test"],
+        eval_langs=["kor-Hang"],
+        main_score="ndcg_at_10",
+        date=("2025-12-21", "2026-01-06"),
+        domains=["Social"],
+        task_subtypes=["Image Text Retrieval"],
+        license="cc-by-4.0",
+        annotations_creators="derived",
+        dialect=[],
+        modalities=["text", "image"],
+        sample_creation="created",
+        bibtext_citation="""
+@misc{choi2026kovidorev2,
+  author = {Yongbin Choi},
+  title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
+  year = {2026},
+  url = {https://github.com/whybe-choi/kovidore-data-generator},
+  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
+}
+""",
+        prompt={"query": "Find a screenshot that is relevant to the user's question."},
+    )
+
+    def load_data(self, **kwargs):
+        if self.data_loaded:
+            return
+
+        self.corpus, self.queries, self.relevant_docs = _load_local_data(
+            subset_name="hr", splits=self.metadata_dict["eval_splits"]
+        )
+
+        self.data_loaded = True
+
+
 AVAILABLE_TASKS = {
     "mir": KoVidoreMIRRetrieval,
     "vqa": KoVidoreVQARetrieval,
@@ -449,9 +664,13 @@ AVAILABLE_TASKS = {
     "office": KoVidoreOfficeRetrieval,
     "finocr": KoVidoreFinOCRRetrieval,
     "test": KoVidoreTestRetrieval,
+    "cybersecurity": KoVidore2CybersecurityRetrieval,
+    "energy": KoVidore2EnergyRetrieval,
+    "economic": KoVidore2EconomicRetrieval,
+    "hr": KoVidore2HrRetrieval,
 }
 
-ALL_TASKS = ["mir", "vqa", "slide", "office", "finocr"]
+ALL_TASKS = ["mir", "vqa", "slide", "office", "finocr"] + ["cybersecurity", "energy", "economic", "hr"]
 
 
 def check_existing_results(model_name: str, tasks: List[str]) -> Tuple[List[str], List[str]]:
@@ -508,7 +727,7 @@ def run_benchmark(
     Args:
         model_name: Name of the model to evaluate
         tasks: List of tasks to run. If None, runs all tasks.
-               Available: "mir", "vqa", "slide", "office", "finocr"
+               Available: "mir", "vqa", "slide", "office", "finocr", "cybersecurity", "energy", "economic", "hr"
         batch_size: Batch size for encoding (default: 16)
         skip_existing: If True, skip tasks that already have results (default: True)
 
