@@ -9,7 +9,7 @@ Korean Vision Document Retrieval (KoViDoRe) benchmark for evaluating text-to-ima
 
 The **KoViDoRe v1** encompasses 5 distinct tasks, each targeting different types of visual documents commonly found in Korean business and academic environments. This diverse task structure allows for thorough evaluation of multimodal retrieval performance across various document formats and content types.
 
-The **KoViDoRe v2** addresses a key limitation of KoViDoRe v1—single-page matching—by generating queries that require synthesizing information across multiple pages. This benchmark consists of 4 distinct tasks targeting practical enterprise domains: cybersecurity, economic reports, energy documents, and HR materials.
+The **KoViDoRe v2** addresses a key limitation of KoViDoRe v1—single-page matching—by generating queries that require aggregating information across multiple pages. This benchmark consists of 4 distinct tasks targeting practical enterprise domains: cybersecurity, economic reports, energy documents, and HR materials.
 
 
 ## Tasks & Examples
@@ -150,7 +150,7 @@ evaluation = run_benchmark("your-model-name", batch_size=32)
 ## Datasets
 
 > [!Note]
-> Unlike KoViDoRe v1, KoViDoRe v2 has no license restrictions and is freely available on Hugging Face. You can access the full dataset collection [here](https://huggingface.co/collections/whybe-choi/kovidore-benchmark-beir-v2).
+> Unlike KoViDoRe v1, KoViDoRe v2 is freely available on Hugging Face. You can access the full dataset collection [here](https://huggingface.co/collections/whybe-choi/kovidore-benchmark-beir-v2).
 
 We provide pre-processed queries and query-corpus mappings for each task. However, due to licensing restrictions, you'll need to download the image datasets manually from AI Hub (see Acknowledgements section for dataset links).
 
