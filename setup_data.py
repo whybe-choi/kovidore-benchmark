@@ -41,7 +41,7 @@ DATASETS = {
     },
     "energy": {
         "path": "whybe-choi/kovidore-v2-energy-beir",
-        "revision": "17fea125be86500c0d7891967ca0e4ada14fbe0d",
+        "revision": "553486a9ba1cda713d80994a0fadec745a495587",
     },
     "economic": {
         "path": "whybe-choi/kovidore-v2-economic-beir",
