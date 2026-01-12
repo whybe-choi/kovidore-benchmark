@@ -26,12 +26,12 @@ The **KoViDoRe v2** addresses a key limitation of KoViDoRe v1—single-page matc
 
 ### KoViDoRe v2
 
-| Subset | Description | Documents | Queries | Link |
-|--------|-------------|-----------|---------|------|
-| **HR** | Workforce outlook and employment policy | 2,109 | 221 | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-hr-beir) |
-| **Energy** | Energy policy and power market trends | 1,911 | 190 | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-energy-beir) |
-| **Economic** | Quarterly economic trend reports | 1,477 | 163 | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-economic-beir) |
-| **Cybersecurity** | Cyber threat analysis and security guides | 1,150 | 149 | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-cybersecurity-beir) |
+| Subset | Description | Documents | Queries | Example Query | Link |
+|--------|-------------|-----------|---------|---------------|------|
+| **HR** | Workforce outlook and employment policy | 2,109 | 221 | 산업용 첨단화학소재 분야의 대졸 채용률, 구매·영업·시장조사 직무의 채용률, 생산기술 직무의 채용-퇴직 격차를 비교하여 인력 수급 불균형 원인을 분석하라. | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-hr-beir) |
+| **Energy** | Energy policy and power market trends | 1,993 | 173 | 액화석유가스 안전공급 계약제에서 체적판매방법과 중량판매방법의 최소 계약기간은 어떻게 다르며, 소비자보장책임보험의 최대 보상한도는 얼마인가요? | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-energy-beir) |
+| **Economic** | Quarterly economic trend reports | 1,477 | 163 | 2022년 원유 도입 단가 상승과 원/달러 환율 변동이 국내 회사채 수익률에 미친 영향을 비교 분석하라 | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-economic-beir) |
+| **Cybersecurity** | Cyber threat analysis and security guides | 1,150 | 149 | 네트워크 백업의 보안 취약점을 해결하기 위해 WORM 스토리지 기술이 어떻게 적용되는가? | [🤗 Dataset](https://huggingface.co/datasets/whybe-choi/kovidore-v2-cybersecurity-beir) |
 
 ## Performance Leaderboard
 
@@ -63,22 +63,22 @@ The following table shows performance across all KoViDoRe v2 tasks (ndcg@10 scor
 
 | Model | Model Size | Cybersecurity | Economic | Energy | HR | Average | KoViDoRe V1 (Kor) |
 |-------|------------|---------------|----------|--------|-----|---------|------------------|
-| **nomic-ai/colnomic-embed-multimodal-3b** | 3000 | 73.7 | 17.8 | 61.0 | 37.0 | 47.4 | 80.4 |
-| **nomic-ai/colnomic-embed-multimodal-7b** | 7000 | 72.3 | 19.9 | 56.7 | 35.8 | 46.2 | 82.1 |
-| **vidore/colqwen2.5-v0.2** | 3000 | 60.8 | 12.6 | 48.1 | 22.9 | 36.1 | 72.8 |
-| **vidore/colqwen2-v1.0** | 2210 | 59.9 | 10.4 | 37.7 | 23.8 | 33.0 | 68.4 |
-| **jinaai/jina-embeddings-v4** | 3800 | 77.3 | 25.5 | 61.7 | 50.4 | 53.7 | 85.4 |
-| **vidore/colpali-v1.2** | 2920 | 40.9 | 2.0 | 18.2 | 5.9 | 16.8 | 36.1 |
-| **vidore/colpali-v1.3** | 2920 | 37.8 | 1.7 | 17.8 | 7.0 | 16.1 | 35.9 |
-| **vidore/colpali-v1.1** | 2920 | 35.6 | 2.7 | 17.7 | 6.5 | 15.6 | 32.2 |
+| **nomic-ai/colnomic-embed-multimodal-3b** | 3000 | 73.7 | 17.8 | 67.4 | 37.0 | 49.0 | 80.4 |
+| **nomic-ai/colnomic-embed-multimodal-7b** | 7000 | 72.3 | 19.9 | 62.5 | 35.8 | 47.6 | 82.1 |
+| **vidore/colqwen2.5-v0.2** | 3000 | 60.8 | 12.6 | 58.6 | 22.9 | 38.7 | 72.8 |
+| **vidore/colqwen2-v1.0** | 2210 | 59.9 | 10.4 | 46.1 | 23.8 | 35.1 | 68.4 |
+| **jinaai/jina-embeddings-v4** | 3800 | 77.3 | 25.5 | 67.4 | 50.4 | 55.2 | 85.4 |
+| **vidore/colpali-v1.2** | 2920 | 40.9 | 2.0 | 20.5 | 5.9 | 17.3 | 36.1 |
+| **vidore/colpali-v1.3** | 2920 | 37.8 | 1.7 | 21.5 | 7.0 | 17.0 | 35.9 |
+| **vidore/colpali-v1.1** | 2920 | 35.6 | 2.7 | 20.7 | 6.5 | 16.4 | 32.2 |
 | **nvidia/llama-nemoretriever-colembed-3b-v1** | 3000 | TBA | TBA | TBA | TBA | TBA | TBA |
 | **nvidia/llama-nemoretriever-colembed-1b-v1** | 2418 | 52.1 | TBA | TBA | TBA | TBA | 46.3 |
-| **vidore/colSmol-500M** | 500 | 27.0 | 1.1 | 6.3 | 1.2 | 8.9 | 17.8 |
-| **vidore/colSmol-256M** | 256 | 23.1 | 1.1 | 5.7 | 1.3 | 7.8 | 16.1 |
-| **google/siglip-so400m-patch14-384** | 878 | 15.3 | 1.3 | 3.3 | 1.1 | 5.3 | 8.6 |
-| **TIGER-Lab/VLM2Vec-Full** | 4150 | 9.8 | 1.3 | 2.8 | 1.2 | 3.8 | 6.4 |
-| **laion/CLIP-ViT-bigG-14-laion2B-39B-b160k** | 2540 | 13.7 | 0.3 | 2.4 | 0.4 | 4.2 | 4.8 |
-| **openai/clip-vit-base-patch16** | 151 | 4.1 | 0.0 | 0.7 | 0.6 | 1.3 | 2.5 |
+| **vidore/colSmol-500M** | 500 | 27.0 | 1.1 | 10.3 | 1.2 | 9.9 | 17.8 |
+| **vidore/colSmol-256M** | 256 | 23.1 | 1.1 | 9.9 | 1.3 | 8.9 | 16.1 |
+| **google/siglip-so400m-patch14-384** | 878 | 15.3 | 1.3 | 5.4 | 1.1 | 5.8 | 8.6 |
+| **TIGER-Lab/VLM2Vec-Full** | 4150 | 9.8 | 1.3 | 3.5 | 1.2 | 4.0 | 6.4 |
+| **laion/CLIP-ViT-bigG-14-laion2B-39B-b160k** | 2540 | 13.7 | 0.3 | 4.2 | 0.4 | 4.7 | 4.8 |
+| **openai/clip-vit-base-patch16** | 151 | 4.1 | 0.0 | 0.8 | 0.6 | 1.4 | 2.5 |
 | **ibm-granite/granite-vision-3.3-2b-embedding** | 2980 | 0.0 | 0.5 | 0.3 | 0.4 | 0.3 | 0.3 |
 
 ## Interpretability
