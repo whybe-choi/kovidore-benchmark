@@ -25,7 +25,7 @@ def _register_kovidore_tasks():
 
         # Register each discovered task
         for task_cls in custom_tasks:
-            mteb.TASKS_REGISTRY[task_cls.metadata.name] = task_cls
+            mteb.get_tasks._TASKS_REGISTRY[task_cls.metadata.name] = task_cls
 
     except ImportError:
         # mteb not available, skip registration

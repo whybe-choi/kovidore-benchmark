@@ -1,14 +1,14 @@
 import logging
 import traceback
 import json
-from typing import List, Any, Optional, Tuple
+from typing import List, Optional, Tuple
 from pathlib import Path
 import pandas as pd
 from tqdm import tqdm
 
-from mteb import MTEB
-from mteb.abstasks.Image.AbsTaskAny2AnyRetrieval import AbsTaskAny2AnyRetrieval
-from mteb.abstasks.TaskMetadata import TaskMetadata
+from mteb.abstasks.retrieval import AbsTaskRetrieval
+from mteb.abstasks.task_metadata import TaskMetadata
+
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -57,7 +57,6 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
                         {
                             "id": f"query-{split}-{row['query-id']}",
                             "text": str(row["text"]),
-                            "image": None,
                             "modality": "text",
                         }
                     )
@@ -89,7 +88,6 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
 
                         yield {
                             "id": f"corpus-{split}-{corpus_id}",
-                            "text": None,
                             "image": image_path_str if image_path_str and Path(image_path_str).exists() else None,
                             "modality": "image",
                         }
@@ -106,7 +104,6 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
         features = Features(
             {
                 "id": Value("string"),
-                "text": Value("string"),
                 "image": Image(),
                 "modality": Value("string"),
             }
@@ -149,7 +146,7 @@ def _load_local_data(subset_name: str, splits: List[str] = ["test"]):
     return corpus, queries, relevant_docs
 
 
-class KoVidoreMIRRetrieval(AbsTaskAny2AnyRetrieval):
+class KoVidoreMIRRetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="KoVidoreMIRRetrieval",
         description="Retrieve associated pages according to questions.",
@@ -172,17 +169,6 @@ class KoVidoreMIRRetrieval(AbsTaskAny2AnyRetrieval):
         modalities=["text", "image"],
         sample_creation="found",
         prompt={"query": "Find a screenshot that relevant to the user's question."},
-        descriptive_stats={
-            "n_samples": None,
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 1.0,
-                    "num_documents": 1366,
-                    "num_queries": 1496,
-                    "average_relevant_docs_per_query": 1.0,
-                }
-            },
-        },
     )
 
     def load_data(self, **kwargs):
@@ -190,7 +176,7 @@ class KoVidoreMIRRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="mir", splits=self.metadata_dict["eval_splits"]
+            subset_name="mir", splits=self.metadata.eval_splits
         )
 
         # Debug: Print data structure
@@ -207,7 +193,7 @@ class KoVidoreMIRRetrieval(AbsTaskAny2AnyRetrieval):
         self.data_loaded = True
 
 
-class KoVidoreVQARetrieval(AbsTaskAny2AnyRetrieval):
+class KoVidoreVQARetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="KoVidoreVQARetrieval",
         description="Retrieve associated pages according to questions.",
@@ -230,17 +216,6 @@ class KoVidoreVQARetrieval(AbsTaskAny2AnyRetrieval):
         modalities=["text", "image"],
         sample_creation="found",
         prompt={"query": "Find a screenshot that relevant to the user's question."},
-        descriptive_stats={
-            "n_samples": None,
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 1.0,
-                    "num_documents": 1101,
-                    "num_queries": 1500,
-                    "average_relevant_docs_per_query": 1.0,
-                }
-            },
-        },
     )
 
     def load_data(self, **kwargs):
@@ -248,13 +223,13 @@ class KoVidoreVQARetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="vqa", splits=self.metadata_dict["eval_splits"]
+            subset_name="vqa", splits=self.metadata.eval_splits
         )
 
         self.data_loaded = True
 
 
-class KoVidoreSlideRetrieval(AbsTaskAny2AnyRetrieval):
+class KoVidoreSlideRetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="KoVidoreSlideRetrieval",
         description="Retrieve associated pages according to questions.",
@@ -277,17 +252,6 @@ class KoVidoreSlideRetrieval(AbsTaskAny2AnyRetrieval):
         modalities=["text", "image"],
         sample_creation="found",
         prompt={"query": "Find a screenshot that relevant to the user's question."},
-        descriptive_stats={
-            "n_samples": None,
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 1.0,
-                    "num_documents": 1415,
-                    "num_queries": 180,
-                    "average_relevant_docs_per_query": 1.2444,
-                }
-            },
-        },
     )
 
     def load_data(self, **kwargs):
@@ -295,13 +259,13 @@ class KoVidoreSlideRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="slide", splits=self.metadata_dict["eval_splits"]
+            subset_name="slide", splits=self.metadata.eval_splits
         )
 
         self.data_loaded = True
 
 
-class KoVidoreOfficeRetrieval(AbsTaskAny2AnyRetrieval):
+class KoVidoreOfficeRetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="KoVidoreOfficeRetrieval",
         description="Retrieve associated pages according to questions.",
@@ -324,17 +288,6 @@ class KoVidoreOfficeRetrieval(AbsTaskAny2AnyRetrieval):
         modalities=["text", "image"],
         sample_creation="found",
         prompt={"query": "Find a screenshot that relevant to the user's question."},
-        descriptive_stats={
-            "n_samples": None,
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 1.0,
-                    "num_documents": 1993,
-                    "num_queries": 222,
-                    "average_relevant_docs_per_query": 1.0991,
-                }
-            },
-        },
     )
 
     def load_data(self, **kwargs):
@@ -342,13 +295,13 @@ class KoVidoreOfficeRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="office", splits=self.metadata_dict["eval_splits"]
+            subset_name="office", splits=self.metadata.eval_splits
         )
 
         self.data_loaded = True
 
 
-class KoVidoreFinOCRRetrieval(AbsTaskAny2AnyRetrieval):
+class KoVidoreFinOCRRetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="KoVidoreFinOCRRetrieval",
         description="Retrieve associated pages according to questions.",
@@ -371,21 +324,20 @@ class KoVidoreFinOCRRetrieval(AbsTaskAny2AnyRetrieval):
         modalities=["text", "image"],
         sample_creation="found",
         prompt={"query": "Find a screenshot that relevant to the user's question."},
-        descriptive_stats={
-            "n_samples": None,
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 1.0,
-                    "num_documents": 2000,
-                    "num_queries": 198,
-                    "average_relevant_docs_per_query": 1.0,
-                }
-            },
-        },
     )
 
+    def load_data(self, **kwargs):
+        if self.data_loaded:
+            return
 
-class KoVidoreTestRetrieval(AbsTaskAny2AnyRetrieval):
+        self.corpus, self.queries, self.relevant_docs = _load_local_data(
+            subset_name="finocr", splits=self.metadata.eval_splits
+        )
+
+        self.data_loaded = True
+
+
+class KoVidoreTestRetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="KoVidoreTestRetrieval",
         description="Test dataset for Korean visual document retrieval.",
@@ -408,17 +360,6 @@ class KoVidoreTestRetrieval(AbsTaskAny2AnyRetrieval):
         modalities=["text", "image"],
         sample_creation="found",
         prompt={"query": "Find a screenshot that relevant to the user's question."},
-        descriptive_stats={
-            "n_samples": None,
-            "avg_character_length": {
-                "test": {
-                    "average_document_length": 1.0,
-                    "num_documents": 10,
-                    "num_queries": 5,
-                    "average_relevant_docs_per_query": 2.0,
-                }
-            },
-        },
     )
 
     def load_data(self, **kwargs):
@@ -426,13 +367,13 @@ class KoVidoreTestRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="test", splits=self.metadata_dict["eval_splits"]
+            subset_name="test", splits=self.metadata.eval_splits
         )
 
         self.data_loaded = True
 
 
-class KoVidore2CybersecurityRetrieval(AbsTaskAny2AnyRetrieval):
+class KoVidore2CybersecurityRetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="KoVidore2CybersecurityRetrieval",
         description="Retrieve associated pages according to questions. This dataset, Cybersecurity, is a corpus of technical reports on cyber threat trends and security incident responses in Korea, intended for complex-document understanding tasks.",
@@ -454,13 +395,13 @@ class KoVidore2CybersecurityRetrieval(AbsTaskAny2AnyRetrieval):
         dialect=[],
         modalities=["text", "image"],
         sample_creation="created",
-        bibtext_citation="""
+        bibtex_citation="""
 @misc{choi2026kovidorev2,
   author = {Yongbin Choi},
+  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains},
   title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
-  year = {2026},
   url = {https://github.com/whybe-choi/kovidore-data-generator},
-  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
+  year = {2026},
 }
 """,
         prompt={"query": "Find a screenshot that is relevant to the user's question."},
@@ -471,58 +412,13 @@ class KoVidore2CybersecurityRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="cybersecurity", splits=self.metadata_dict["eval_splits"]
+            subset_name="cybersecurity", splits=self.metadata.eval_splits
         )
 
         self.data_loaded = True
 
 
-class KoVidore2CybersecurityRetrieval(AbsTaskAny2AnyRetrieval):
-    metadata = TaskMetadata(
-        name="KoVidore2CybersecurityRetrieval",
-        description="Retrieve associated pages according to questions. This dataset, Cybersecurity, is a corpus of technical reports on cyber threat trends and security incident responses in Korea, intended for complex-document understanding tasks.",
-        reference="https://huggingface.co/datasets/whybe-choi/kovidore-v2-cybersecurity-beir",
-        dataset={
-            "path": "data/cybersecurity",
-            "revision": "local",
-        },
-        type="DocumentUnderstanding",
-        category="t2i",
-        eval_splits=["test"],
-        eval_langs=["kor-Hang"],
-        main_score="ndcg_at_10",
-        date=("2025-12-21", "2026-01-06"),
-        domains=["Social"],
-        task_subtypes=["Image Text Retrieval"],
-        license="cc-by-4.0",
-        annotations_creators="derived",
-        dialect=[],
-        modalities=["text", "image"],
-        sample_creation="created",
-        bibtext_citation="""
-@misc{choi2026kovidorev2,
-  author = {Yongbin Choi},
-  title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
-  year = {2026},
-  url = {https://github.com/whybe-choi/kovidore-data-generator},
-  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
-}
-""",
-        prompt={"query": "Find a screenshot that is relevant to the user's question."},
-    )
-
-    def load_data(self, **kwargs):
-        if self.data_loaded:
-            return
-
-        self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="cybersecurity", splits=self.metadata_dict["eval_splits"]
-        )
-
-        self.data_loaded = True
-
-
-class KoVidore2EnergyRetrieval(AbsTaskAny2AnyRetrieval):
+class KoVidore2EnergyRetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="KoVidore2EnergyRetrieval",
         description="Retrieve associated pages according to questions. This dataset, Energy, is a corpus of reports on energy market trends, policy planning, and industry statistics, intended for complex-document understanding tasks.",
@@ -544,13 +440,13 @@ class KoVidore2EnergyRetrieval(AbsTaskAny2AnyRetrieval):
         dialect=[],
         modalities=["text", "image"],
         sample_creation="created",
-        bibtext_citation="""
+        bibtex_citation="""
 @misc{choi2026kovidorev2,
   author = {Yongbin Choi},
+  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains},
   title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
-  year = {2026},
   url = {https://github.com/whybe-choi/kovidore-data-generator},
-  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
+  year = {2026},
 }
 """,
         prompt={"query": "Find a screenshot that is relevant to the user's question."},
@@ -561,13 +457,13 @@ class KoVidore2EnergyRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="energy", splits=self.metadata_dict["eval_splits"]
+            subset_name="energy", splits=self.metadata.eval_splits
         )
 
         self.data_loaded = True
 
 
-class KoVidore2EconomicRetrieval(AbsTaskAny2AnyRetrieval):
+class KoVidore2EconomicRetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="KoVidore2EconomicRetrieval",
         description="Retrieve associated pages according to questions. This dataset, Economic trends, is a corpus of periodic reports on major economic indicators in Korea, intended for complex-document understanding tasks.",
@@ -589,13 +485,13 @@ class KoVidore2EconomicRetrieval(AbsTaskAny2AnyRetrieval):
         dialect=[],
         modalities=["text", "image"],
         sample_creation="created",
-        bibtext_citation="""
+        bibtex_citation="""
 @misc{choi2026kovidorev2,
   author = {Yongbin Choi},
+  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains},
   title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
-  year = {2026},
   url = {https://github.com/whybe-choi/kovidore-data-generator},
-  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
+  year = {2026},
 }
 """,
         prompt={"query": "Find a screenshot that is relevant to the user's question."},
@@ -606,13 +502,13 @@ class KoVidore2EconomicRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="economic", splits=self.metadata_dict["eval_splits"]
+            subset_name="economic", splits=self.metadata.eval_splits
         )
 
         self.data_loaded = True
 
 
-class KoVidore2HrRetrieval(AbsTaskAny2AnyRetrieval):
+class KoVidore2HrRetrieval(AbsTaskRetrieval):
     metadata = TaskMetadata(
         name="KoVidore2HrRetrieval",
         description="Retrieve associated pages according to questions. This dataset, HR, is a corpus of reports on workforce outlook and employment policy in korea, intended for complex-document understanding tasks.",
@@ -634,13 +530,13 @@ class KoVidore2HrRetrieval(AbsTaskAny2AnyRetrieval):
         dialect=[],
         modalities=["text", "image"],
         sample_creation="created",
-        bibtext_citation="""
+        bibtex_citation="""
 @misc{choi2026kovidorev2,
   author = {Yongbin Choi},
+  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains},
   title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
-  year = {2026},
   url = {https://github.com/whybe-choi/kovidore-data-generator},
-  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
+  year = {2026},
 }
 """,
         prompt={"query": "Find a screenshot that is relevant to the user's question."},
@@ -651,7 +547,7 @@ class KoVidore2HrRetrieval(AbsTaskAny2AnyRetrieval):
             return
 
         self.corpus, self.queries, self.relevant_docs = _load_local_data(
-            subset_name="hr", splits=self.metadata_dict["eval_splits"]
+            subset_name="hr", splits=self.metadata.eval_splits
         )
 
         self.data_loaded = True
@@ -778,11 +674,12 @@ def run_benchmark(
         logger.info(f"Running tasks: {tasks}")
 
         try:
-            evaluation = mteb.MTEB(tasks=selected_tasks)
             logger.info(f"Starting evaluation with batch_size={batch_size}")
-            results = evaluation.run(
+            cache = mteb.ResultCache(cache_path=f"results/{model_name}")
+            results = mteb.evaluate(
                 model,
-                output_folder=f"results/{model_name}",
+                tasks=selected_tasks,
+                cache=cache,
                 encode_kwargs={"batch_size": batch_size},
             )
         except Exception as e:
@@ -792,7 +689,7 @@ def run_benchmark(
             raise
 
         logger.info("Evaluation completed successfully")
-        return evaluation
+        return results
     except ImportError as e:
         logger.error(f"Required packages not installed: {e}")
         logger.error("Please install mteb and sentence-transformers:")
