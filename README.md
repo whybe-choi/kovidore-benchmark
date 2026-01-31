@@ -36,50 +36,56 @@ The **KoViDoRe v2** addresses a key limitation of KoViDoRe v1—single-page matc
 ## Performance Leaderboard
 
 ### KoViDoRe v1
-The following table shows performance across all KoViDoRe v1 tasks (ndcg@5 scores as percentages):
+The following table shows performance across all KoViDoRe v1 tasks (ndcg@5 scores as percentages, sorted by Average):
 
-| Model | Model Size | FinOCR | MIR | Office | Slide | VQA | Average | ViDoRe V2 (Eng) |
-|-------|------------|--------|-----|--------|-------|-----|---------|------------------|
-| **nomic-ai/colnomic-embed-multimodal-3b** | 3000 | 82.2 | 70.7 | 86.3 | 78.4 | 84.4 | 80.4 | 55.5 |
-| **nomic-ai/colnomic-embed-multimodal-7b** | 7000 | 81.9 | 67.9 | 85.9 | 87.6 | 87.2 | 82.1 | 60.8 |
-| **vidore/colqwen2.5-v0.2** | 3000 | 67.3 | 62.5 | 75.3 | 78.0 | 81.0 | 72.8 | 59.3 |
-| **vidore/colqwen2-v1.0** | 2210 | 66.3 | 57.4 | 68.7 | 73.9 | 75.5 | 68.4 | 55.0 |
-| **jinaai/jina-embeddings-v4** | 3800 | 88.9 | 73.8 | 88.6 | 89.5 | 86.2 | 85.4 | 57.6 |
-| **vidore/colpali-v1.2** | 2920 | 43.8 | 20.2 | 28.4 | 51.2 | 36.8 | 36.1 | 50.7 |
-| **vidore/colpali-v1.3** | 2920 | 42.6 | 18.8 | 26.4 | 55.3 | 36.6 | 35.9 | 54.2 |
-| **vidore/colpali-v1.1** | 2920 | 38.3 | 19.0 | 25.3 | 48.6 | 30.0 | 32.2 | 47.2 |
-| **nvidia/llama-nemoretriever-colembed-3b-v1** | 3000 | TBA | TBA | TBA | TBA | TBA | TBA | 63.5 |
-| **nvidia/llama-nemoretriever-colembed-1b-v1** | 1000 | 76.6 | 28.1 | 34.2 | 53.3 | 39.4 | 46.3 | 62.1 |
-| **vidore/colSmol-500M** | 500 | 50.9 | 4.7 | 9.7 | 16.1 | 7.4 | 17.8 | 43.5 |
-| **vidore/colSmol-256M** | 256 | 46.6 | 4.0 | 8.4 | 13.9 | 7.6 | 16.1 | 32.9 |
-| **google/siglip-so400m-patch14-384** | 878 | 4.0 | 3.9 | 6.3 | 21.3 | 7.3 | 8.6 | 31.4 |
-| **TIGER-Lab/VLM2Vec-Full** | 4150 | 1.4 | 1.6 | 7.2 | 14.9 | 6.8 | 6.4 | 30.1 |
-| **laion/CLIP-ViT-bigG-14-laion2B-39B-b160k** | 2540 | 0.5 | 1.9 | 3.7 | 12.5 | 5.6 | 4.8 | 17.6 |
-| **openai/clip-vit-base-patch16** | 151 | 0.3 | 0.6 | 0.0 | 5.9 | 3.3 | 2.5 | 8.3 |
-| **ibm-granite/granite-vision-3.3-2b-embedding** | 2980 | 0.0 | 0.4 | 0.6 | 0.3 | 0.0 | 0.26 | 58.1 |
+| Model | Model Size | FinOCR | MIR | Office | Slide | VQA | Average |
+|-------|------------|--------|-----|--------|-------|-----|---------|
+| **jinaai/jina-embeddings-v4** | 3800 | 94.1 | 73.6 | 88.7 | 89.7 | 86.3 | 86.5 |
+| **TomoroAI/tomoro-colqwen3-embed-8b** | 8000 | 81.8 | 60.9 | 84.2 | 86.3 | 82.9 | 79.2 |
+| **nomic-ai/colnomic-embed-multimodal-7b** | 7000 | 78.0 | 63.4 | 82.0 | 86.8 | 85.2 | 79.1 |
+| **ApsaraStackMaaS/EvoQwen2.5-VL-Retriever-7B-v1** | 7000 | 65.9 | 60.2 | 79.5 | 84.2 | 82.1 | 74.4 |
+| **nomic-ai/colnomic-embed-multimodal-3b** | 3000 | 75.5 | 56.3 | 82.2 | 36.3 | 72.9 | 64.6 |
+| **vidore/colqwen2-v1.0** | 2210 | 61.6 | 44.0 | 56.7 | 66.0 | 67.5 | 59.2 |
+| **TomoroAI/tomoro-colqwen3-embed-4b** | 4000 | 67.1 | 32.4 | 42.5 | 66.9 | 52.8 | 52.3 |
+| **vidore/colqwen2.5-v0.2** | 3000 | 45.0 | 48.0 | 62.2 | 25.6 | 68.0 | 49.8 |
+| **ApsaraStackMaaS/EvoQwen2.5-VL-Retriever-3B-v1** | 3000 | 43.0 | 37.5 | 53.7 | 24.8 | 62.3 | 44.3 |
+| **eagerworks/eager-embed-v1** | 4000 | 17.9 | 20.8 | 37.0 | 60.6 | 49.0 | 37.1 |
+| **vidore/colpali-v1.3** | 2920 | 38.2 | 14.9 | 23.6 | 50.7 | 30.0 | 31.5 |
+| **vidore/colpali-v1.2** | 2920 | 37.1 | 13.2 | 24.8 | 46.7 | 28.4 | 30.0 |
+| **vidore/colpali-v1.1** | 2920 | 35.4 | 16.4 | 19.0 | 44.1 | 25.6 | 28.1 |
+| **vidore/colSmol-500M** | 500 | 43.6 | 3.7 | 7.4 | 13.5 | 6.2 | 14.9 |
+| **jinaai/jina-clip-v2** | 865 | 1.1 | 8.4 | 14.4 | 33.3 | 11.6 | 13.8 |
+| **vidore/colSmol-256M** | 256 | 37.4 | 3.2 | 4.8 | 10.8 | 5.6 | 12.4 |
+| **google/siglip-so400m-patch14-384** | 878 | 4.0 | 3.9 | 6.3 | 21.3 | 7.2 | 8.5 |
+| **TIGER-Lab/VLM2Vec-Full** | 4150 | 1.7 | 1.6 | 8.0 | 15.0 | 6.7 | 6.6 |
+| **laion/CLIP-ViT-bigG-14-laion2B-39B-b160k** | 2540 | 0.5 | 1.9 | 3.3 | 12.5 | 5.6 | 4.8 |
+| **openai/clip-vit-base-patch16** | 151 | 0.3 | 0.6 | 0.0 | 5.9 | 3.3 | 2.0 |
 
 ### KoViDoRe v2
-The following table shows performance across all KoViDoRe v2 tasks (ndcg@10 scores as percentages):
+The following table shows performance across all KoViDoRe v2 tasks (ndcg@10 scores as percentages, sorted by Average):
 
-| Model | Model Size | Cybersecurity | Economic | Energy | HR | Average | KoViDoRe V1 (Kor) |
-|-------|------------|---------------|----------|--------|-----|---------|------------------|
-| **nomic-ai/colnomic-embed-multimodal-3b** | 3000 | 73.7 | 17.8 | 67.4 | 37.0 | 49.0 | 80.4 |
-| **nomic-ai/colnomic-embed-multimodal-7b** | 7000 | 72.3 | 19.9 | 62.5 | 35.8 | 47.6 | 82.1 |
-| **vidore/colqwen2.5-v0.2** | 3000 | 60.8 | 12.6 | 58.6 | 22.9 | 38.7 | 72.8 |
-| **vidore/colqwen2-v1.0** | 2210 | 59.9 | 10.4 | 46.1 | 23.8 | 35.1 | 68.4 |
-| **jinaai/jina-embeddings-v4** | 3800 | 77.3 | 25.5 | 67.4 | 50.4 | 55.2 | 85.4 |
-| **vidore/colpali-v1.2** | 2920 | 40.9 | 2.0 | 20.5 | 5.9 | 17.3 | 36.1 |
-| **vidore/colpali-v1.3** | 2920 | 37.8 | 1.7 | 21.5 | 7.0 | 17.0 | 35.9 |
-| **vidore/colpali-v1.1** | 2920 | 35.6 | 2.7 | 20.7 | 6.5 | 16.4 | 32.2 |
-| **nvidia/llama-nemoretriever-colembed-3b-v1** | 3000 | TBA | TBA | TBA | TBA | TBA | TBA |
-| **nvidia/llama-nemoretriever-colembed-1b-v1** | 2418 | 52.1 | TBA | TBA | TBA | TBA | 46.3 |
-| **vidore/colSmol-500M** | 500 | 27.0 | 1.1 | 10.3 | 1.2 | 9.9 | 17.8 |
-| **vidore/colSmol-256M** | 256 | 23.1 | 1.1 | 9.9 | 1.3 | 8.9 | 16.1 |
-| **google/siglip-so400m-patch14-384** | 878 | 15.3 | 1.3 | 5.4 | 1.1 | 5.8 | 8.6 |
-| **TIGER-Lab/VLM2Vec-Full** | 4150 | 9.8 | 1.3 | 3.5 | 1.2 | 4.0 | 6.4 |
-| **laion/CLIP-ViT-bigG-14-laion2B-39B-b160k** | 2540 | 13.7 | 0.3 | 4.2 | 0.4 | 4.7 | 4.8 |
-| **openai/clip-vit-base-patch16** | 151 | 4.1 | 0.0 | 0.8 | 0.6 | 1.4 | 2.5 |
-| **ibm-granite/granite-vision-3.3-2b-embedding** | 2980 | 0.0 | 0.5 | 0.3 | 0.4 | 0.3 | 0.3 |
+| Model | Model Size | Cybersecurity | Economic | Energy | HR | Average |
+|-------|------------|---------------|----------|--------|-----|---------|
+| **jinaai/jina-embeddings-v4** | 3800 | 77.6 | 24.5 | 67.7 | 50.1 | 55.0 |
+| **TomoroAI/tomoro-colqwen3-embed-8b** | 8000 | 73.7 | 16.3 | 58.5 | 26.5 | 43.8 |
+| **nomic-ai/colnomic-embed-multimodal-7b** | 7000 | 69.6 | 12.4 | 59.5 | 33.3 | 43.7 |
+| **ApsaraStackMaaS/EvoQwen2.5-VL-Retriever-7B-v1** | 7000 | 66.0 | 12.1 | 55.4 | 26.4 | 40.0 |
+| **nomic-ai/colnomic-embed-multimodal-3b** | 3000 | 47.4 | 10.5 | 44.2 | 32.9 | 33.8 |
+| **vidore/colqwen2-v1.0** | 2210 | 53.3 | 8.0 | 42.0 | 14.7 | 29.5 |
+| **TomoroAI/tomoro-colqwen3-embed-4b** | 4000 | 55.3 | 9.1 | 31.0 | 10.1 | 26.4 |
+| **vidore/colqwen2.5-v0.2** | 3000 | 43.9 | 3.9 | 44.3 | 13.5 | 26.4 |
+| **eagerworks/eager-embed-v1** | 4000 | 51.5 | 5.4 | 32.7 | 7.0 | 24.2 |
+| **ApsaraStackMaaS/EvoQwen2.5-VL-Retriever-3B-v1** | 3000 | 41.4 | 6.3 | 31.5 | 11.3 | 22.6 |
+| **vidore/colpali-v1.3** | 2920 | 34.7 | 1.6 | 20.6 | 6.2 | 15.8 |
+| **vidore/colpali-v1.1** | 2920 | 31.9 | 3.0 | 18.2 | 6.0 | 14.8 |
+| **vidore/colpali-v1.2** | 2920 | 33.2 | 2.1 | 16.4 | 4.5 | 14.1 |
+| **vidore/colSmol-500M** | 500 | 26.2 | 0.6 | 9.9 | 0.9 | 9.4 |
+| **jinaai/jina-clip-v2** | 865 | 20.4 | 0.2 | 11.3 | 3.1 | 8.8 |
+| **vidore/colSmol-256M** | 256 | 19.7 | 1.0 | 9.5 | 1.1 | 7.8 |
+| **google/siglip-so400m-patch14-384** | 878 | 15.3 | 1.3 | 5.3 | 1.1 | 5.8 |
+| **laion/CLIP-ViT-bigG-14-laion2B-39B-b160k** | 2540 | 13.8 | 0.3 | 4.2 | 0.4 | 4.7 |
+| **TIGER-Lab/VLM2Vec-Full** | 4150 | 9.8 | 1.3 | 3.2 | 1.3 | 3.9 |
+| **openai/clip-vit-base-patch16** | 151 | 4.1 | 0.0 | 0.8 | 0.6 | 1.4 |
 
 ## Interpretability
 
