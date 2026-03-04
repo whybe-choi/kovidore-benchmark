@@ -1,13 +1,14 @@
 [project]
 name = "kovidore-benchmark"
-version = "1.0.0"
+version = "2.0.0"
 description = "Korean Vision Document Retrieval Benchmark"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "mteb>=1.38.54",
-    "torch>=2.5.0,<2.8.0",
+    "mteb>=2.7.0,<2.9.0",
+    "torch>=2.8.0,<2.9.0",
     "torchvision>=0.20.0",
+    "transformers>=4.53.0,<5.0.0",
     "peft>=0.14.0,<0.17.0",
     "einops>=0.8.1",
     "sentencepiece>=0.2.1",
@@ -20,6 +21,7 @@ dependencies = [
     "pillow>=10.0.0",
     "tqdm>=4.0.0",
     "flash-attn>=2.8.3",
+    "qwen-vl-utils>=0.0.14",
 ]
 
 [tool.setuptools]
@@ -27,9 +29,6 @@ packages = ["kovidore"]
 
 [tool.uv]
 package = true
-
-[tool.uv.sources]
-colpali-engine = { git = "https://github.com/illuin-tech/colpali" }
 
 [tool.uv.extra-build-dependencies]
 flash-attn = [{ requirement = "torch", match-runtime = true }]
