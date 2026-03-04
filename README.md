@@ -207,12 +207,4 @@ If you use KoViDoRe in your research, please cite as follows:
   url = {https://github.com/whybe-choi/kovidore-benchmark},
   note = {A comprehensive benchmark for evaluating visual document retrieval models on Korean document images}
 }
-
-@misc{choi2026kovidorev2,
-  author = {Yongbin Choi},
-  title = {KoViDoRe v2: a comprehensive evaluation of vision document retrieval for enterprise use-cases},
-  year = {2026},
-  url = {https://github.com/whybe-choi/kovidore-data-generator},
-  note = {A benchmark for evaluating Korean vision document retrieval with multi-page reasoning queries in practical domains}
-}
 ```
