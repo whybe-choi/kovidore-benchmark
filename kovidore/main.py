@@ -28,9 +28,22 @@ def main():
         default=None,
         help=f"Tasks to run (default: all). Available: {', '.join(ALL_TASKS)}",
     )
-    parser.add_argument("--list-tasks", action="store_true", help="List available tasks and exit")
-    parser.add_argument("--batch-size", type=int, default=16, help="Batch size for encoding (default: 16)")
-    parser.add_argument("--force", action="store_true", help="Force re-evaluation even if results already exist")
+    parser.add_argument(
+        "--list-tasks",
+        action="store_true",
+        help="List available tasks and exit",
+    )
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=16,
+        help="Batch size for encoding (default: 16)",
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force re-evaluation even if results already exist",
+    )
 
     args = parser.parse_args()
 
