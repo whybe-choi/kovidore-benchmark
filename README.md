@@ -44,8 +44,10 @@ The following table shows performance across all KoViDoRe v1 tasks (ndcg@5 score
 | **TomoroAI/tomoro-colqwen3-embed-8b** | 8000 | 81.8 | 60.9 | 84.2 | 86.3 | 82.9 | 79.2 |
 | **nomic-ai/colnomic-embed-multimodal-7b** | 7000 | 78.0 | 63.4 | 82.0 | 86.8 | 85.2 | 79.1 |
 | **ApsaraStackMaaS/EvoQwen2.5-VL-Retriever-7B-v1** | 7000 | 65.9 | 60.2 | 79.5 | 84.2 | 82.1 | 74.4 |
+| **Qwen/Qwen3-VL-Embedding-8B** | 8000 | 58.2 | 59.5 | 79.9 | 82.8 | 84.1 | 72.9 |
 | **nomic-ai/colnomic-embed-multimodal-3b** | 3000 | 75.5 | 56.3 | 82.2 | 36.3 | 72.9 | 64.6 |
 | **vidore/colqwen2-v1.0** | 2210 | 61.6 | 44.0 | 56.7 | 66.0 | 67.5 | 59.2 |
+| **Qwen/Qwen3-VL-Embedding-2B** | 2000 | 42.3 | 41.5 | 56.9 | 70.5 | 65.7 | 55.4 |
 | **TomoroAI/tomoro-colqwen3-embed-4b** | 4000 | 67.1 | 32.4 | 42.5 | 66.9 | 52.8 | 52.3 |
 | **vidore/colqwen2.5-v0.2** | 3000 | 45.0 | 48.0 | 62.2 | 25.6 | 68.0 | 49.8 |
 | **ApsaraStackMaaS/EvoQwen2.5-VL-Retriever-3B-v1** | 3000 | 43.0 | 37.5 | 53.7 | 24.8 | 62.3 | 44.3 |
@@ -67,9 +69,11 @@ The following table shows performance across all KoViDoRe v2 tasks (ndcg@10 scor
 | Model | Model Size | Cybersecurity | Economic | Energy | HR | Average |
 |-------|------------|---------------|----------|--------|-----|---------|
 | **jinaai/jina-embeddings-v4** | 3800 | 77.6 | 24.5 | 67.7 | 50.1 | 55.0 |
+| **Qwen/Qwen3-VL-Embedding-8B** | 8000 | 77.8 | 23.4 | 63.2 | 37.4 | 50.4 |
 | **TomoroAI/tomoro-colqwen3-embed-8b** | 8000 | 73.7 | 16.3 | 58.5 | 26.5 | 43.8 |
 | **nomic-ai/colnomic-embed-multimodal-7b** | 7000 | 69.6 | 12.4 | 59.5 | 33.3 | 43.7 |
 | **ApsaraStackMaaS/EvoQwen2.5-VL-Retriever-7B-v1** | 7000 | 66.0 | 12.1 | 55.4 | 26.4 | 40.0 |
+| **Qwen/Qwen3-VL-Embedding-2B** | 2000 | 61.3 | 15.3 | 40.6 | 18.7 | 34.0 |
 | **nomic-ai/colnomic-embed-multimodal-3b** | 3000 | 47.4 | 10.5 | 44.2 | 32.9 | 33.8 |
 | **vidore/colqwen2-v1.0** | 2210 | 53.3 | 8.0 | 42.0 | 14.7 | 29.5 |
 | **TomoroAI/tomoro-colqwen3-embed-4b** | 4000 | 55.3 | 9.1 | 31.0 | 10.1 | 26.4 |
