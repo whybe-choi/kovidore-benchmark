@@ -204,11 +204,12 @@ For questions or suggestions, please open an issue on the GitHub repository or c
 
 If you use KoViDoRe in your research, please cite as follows:
 ```bibtex
-@misc{KoViDoRe2025,
-  author = {Yongbin Choi and Yongwoo Song},
-  title = {KoViDoRe: Korean Vision Document Retrieval Benchmark},
-  year = {2025},
-  url = {https://github.com/whybe-choi/kovidore-benchmark},
-  note = {A comprehensive benchmark for evaluating visual document retrieval models on Korean document images}
+@inproceedings{choi-etal-2026-kovidore,
+    title = "{K}o{V}i{D}o{R}e: A Benchmark for {K}orean Visual Document Retrieval",
+    author = "Choi, Yongbin and Song, Yongwoo and Sung, Mujeen",
+    booktitle = "Proceedings of the 2nd Workshop on Multimodal Augmented Generation via Multimodal Retrieval ({MAGM}a{R} 2026)",
+    year = "2026",
+    doi = "10.18653/v1/2026.magmar-main.11",
+    url = "https://aclanthology.org/2026.magmar-main.11/"
 }
 ```
